@@ -56,14 +56,16 @@ namespace backend.Controllers
         {
             if (id != stock.ID)
             {
-                return BadRequest();
+                stock.ID = id;
             }
-
             _context.Entry(stock).State = EntityState.Modified;
+            var newPrice = new Price { StockID = id, Value = stock.Price };
+            _context.Prices.Add(newPrice);
 
             try
             {
                 await _context.SaveChangesAsync();
+
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -92,7 +94,11 @@ namespace backend.Controllers
             _context.Stocks.Add(stock);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetStock), new { id = stock.ID }, stock);
+
+            return CreatedAtAction(nameof(GetStock), new
+            {
+                id = stock.ID
+            }, stock);
         }
 
         // DELETE: api/Stock/5
