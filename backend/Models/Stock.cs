@@ -11,5 +11,4 @@ public class Stock
 
     public ICollection<Price> Prices { get; } = new List<Price>();
 
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }

@@ -1,4 +1,6 @@
+using backend.Hubs;
 using backend.Models;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.BackgroundWorkerService;
@@ -7,11 +9,14 @@ public class BackgroundWorkerService : BackgroundService
     readonly ILogger<BackgroundWorkerService> _logger;
 
     private readonly IServiceProvider _serviceProvider;
+    private readonly IHubContext<StockHub> _hubContext;
 
-    public BackgroundWorkerService(ILogger<BackgroundWorkerService> logger, IServiceProvider serviceProvider)
+
+    public BackgroundWorkerService(IHubContext<StockHub> hubContext, ILogger<BackgroundWorkerService> logger, IServiceProvider serviceProvider)
     {
         _logger = logger;
         _serviceProvider = serviceProvider;
+        _hubContext = hubContext;
 
     }
 
@@ -37,6 +42,7 @@ public class BackgroundWorkerService : BackgroundService
 
             await dbContext.SaveChangesAsync(stoppingToken);
 
+            await _hubContext.Clients.All.SendAsync("PriceUpdates", stocks);
             await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
         }
 
