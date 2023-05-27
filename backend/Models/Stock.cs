@@ -11,4 +11,8 @@ public class Stock
 
     public ICollection<Price> Prices { get; } = new List<Price>();
 
+    public ICollection<Order> Orders { get; } = new List<Order>();
+
+
+
 }

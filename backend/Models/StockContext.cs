@@ -10,7 +10,8 @@ public class StockContext : DbContext
     }
 
     public DbSet<Stock> Stocks { get; set; } = null!;
-    public DbSet<Price> Prices { get; set; } = null!;
+    public DbSet<Order> Orders { get; set; } = null!;
+
 
 
 }
