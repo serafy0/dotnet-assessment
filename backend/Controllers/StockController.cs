@@ -60,7 +60,7 @@ namespace backend.Controllers
             }
             _context.Entry(stock).State = EntityState.Modified;
             var newPrice = new Price { StockID = id, Value = stock.Price };
-            _context.Prices.Add(newPrice);
+            stock.Prices.Add(newPrice);
 
             try
             {
