@@ -39,7 +39,7 @@ namespace backend.Controllers
             {
                 return NotFound();
             }
-            var stock = await _context.Stocks.FindAsync(id);
+            var stock = await _context.Stocks.Include(stock => stock.Prices).FirstOrDefaultAsync(stock => stock.ID == id);
 
             if (stock == null)
             {
