@@ -8,7 +8,6 @@ namespace backend.Hubs
         public async Task SendUpdates(List<Stock> stocks)
         {
             await Clients.All.SendAsync("PriceUpdates", stocks);
-            await Clients.All.SendAsync("transferStockData", stocks);
 
         }
     }
