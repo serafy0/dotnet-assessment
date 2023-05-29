@@ -33,12 +33,6 @@ namespace backend.Migrations
                     b.Property<string>("Buyer")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
@@ -76,7 +70,7 @@ namespace backend.Migrations
 
                     b.HasIndex("StockID");
 
-                    b.ToTable("Price");
+                    b.ToTable("Prices");
                 });
 
             modelBuilder.Entity("backend.Models.Stock", b =>
@@ -100,11 +94,13 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Order", b =>
                 {
-                    b.HasOne("backend.Models.Stock", null)
+                    b.HasOne("backend.Models.Stock", "Stock")
                         .WithMany("Orders")
                         .HasForeignKey("StockID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Stock");
                 });
 
             modelBuilder.Entity("backend.Models.Price", b =>
