@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IStock } from '../types/IStock';
-import { CollectionViewer, DataSource } from '@angular/cdk/collections';
+import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { StockService } from './stock.service';
-import { SignalrService } from './signal-r.service';
 
 @Injectable()
 export class StockDataSource extends DataSource<IStock> {
@@ -22,12 +21,12 @@ export class StockDataSource extends DataSource<IStock> {
   loadStocks(): void {
     this.isLoading$.next(true);
     this.stockService.fetchStocks().subscribe((stocks) => {
-      this.stocks$.next(stocks);
+      this.stocks$.next(stocks.sort((a, b) => (a.id < b.id ? 1 : 0)));
     });
     this.stockService.fetchRealTimeStocks().subscribe((stocks) => {
       this.isLoading$.next(true);
-      console.log('signalStocls: ', stocks);
-      this.stocks$.next(stocks[0]);
+      console.log('signalStocks: ', stocks);
+      this.stocks$.next(stocks[0].sort((a, b) => (a.id < b.id ? 1 : 0)));
     });
   }
 }

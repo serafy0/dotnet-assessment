@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { IStock } from '../types/IStock';
 import { Observable, Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
