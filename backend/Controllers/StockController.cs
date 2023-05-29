@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using backend.Models;
 
+
 namespace backend.Controllers
 {
     [Route("api/[controller]")]
@@ -91,7 +92,11 @@ namespace backend.Controllers
             {
                 return Problem("Entity set 'StockContext.Stocks'  is null.");
             }
+            var initialPrice = new Price { Value = stock.Price };
+            stock.Prices.Add(initialPrice);
+
             _context.Stocks.Add(stock);
+
             await _context.SaveChangesAsync();
 
 
