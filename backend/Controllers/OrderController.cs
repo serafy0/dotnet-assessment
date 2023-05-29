@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using backend.Models;
+
+using Microsoft.AspNetCore.SignalR;
+using backend.Hubs;
 
 namespace backend.Controllers
 {
@@ -14,10 +12,15 @@ namespace backend.Controllers
     public class OrderController : ControllerBase
     {
         private readonly StockContext _context;
+        private readonly IHubContext<OrderHub> _hubContext;
 
-        public OrderController(StockContext context)
+
+        public OrderController(IHubContext<OrderHub> hubContext, StockContext context)
         {
             _context = context;
+            _hubContext = hubContext;
+
+
         }
 
         // GET: api/Order
@@ -28,7 +31,8 @@ namespace backend.Controllers
             {
                 return NotFound();
             }
-            return await _context.Orders.ToListAsync();
+
+            return await _context.Orders.Include(order => order.Stock).ToListAsync();
         }
 
         // GET: api/Order/5
@@ -39,12 +43,14 @@ namespace backend.Controllers
             {
                 return NotFound();
             }
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _context.Orders.FirstOrDefaultAsync(order => order.ID == id);
 
             if (order == null)
             {
                 return NotFound();
             }
+
+
 
             return order;
         }
@@ -58,6 +64,12 @@ namespace backend.Controllers
             {
                 return BadRequest();
             }
+            bool stockExists = _context.Stocks.Any(stock => stock.ID == order.StockID);
+            if (!stockExists)
+            {
+                return BadRequest();
+            }
+
 
             _context.Entry(order).State = EntityState.Modified;
 
@@ -89,8 +101,20 @@ namespace backend.Controllers
             {
                 return Problem("Entity set 'StockContext.Orders'  is null.");
             }
+            Stock? stock = await _context.Stocks.FindAsync(order.StockID);
+            if (stock == null)
+            {
+                return BadRequest();
+            }
+
             _context.Orders.Add(order);
+
             await _context.SaveChangesAsync();
+
+            order.Stock = stock;
+            await _hubContext.Clients.All.SendAsync("SendOrder", order);
+
+
 
             return CreatedAtAction("GetOrder", new { id = order.ID }, order);
         }
