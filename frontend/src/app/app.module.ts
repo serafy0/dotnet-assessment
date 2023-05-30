@@ -4,7 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StocksModule } from './stocks/stocks.module';
-import { StockComponent } from './stocks/components/stock/stock.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [AppComponent],
@@ -13,6 +14,8 @@ import { StockComponent } from './stocks/components/stock/stock.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     StocksModule,
+    MatToolbarModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -7,6 +7,8 @@ import { StockService } from '../../services/stock.service';
   templateUrl: './stock.component.html',
 })
 export class StockComponent implements OnInit {
+  title = 'stocks';
+
   displayedColumns: string[] = ['id', 'name', 'price'];
   dataSource = new StockDataSource(this.stockService);
   constructor(private stockService: StockService) {}
