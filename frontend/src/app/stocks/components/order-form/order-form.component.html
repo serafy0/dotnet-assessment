@@ -1,0 +1,34 @@
+<form [formGroup]="orderForm" (submit)="onSubmit()">
+  <mat-form-field>
+    <mat-label>Stock</mat-label>
+    <mat-select formControlName="stockID">
+      <mat-option
+        *ngFor="let stock of stocksSource.stocks$ | async"
+        [value]="stock.id"
+        [id]="stock.id.toString()"
+      >
+        {{ stock.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Price</mat-label>
+
+    <input matInput type="number" min="0" formControlName="price" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>quantity</mat-label>
+
+    <input matInput type="number" min="1" formControlName="quantity" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>buyer</mat-label>
+
+    <input matInput formControlName="buyer" />
+  </mat-form-field>
+
+  <button mat-raised-button type="submit">Submit</button>
+</form>

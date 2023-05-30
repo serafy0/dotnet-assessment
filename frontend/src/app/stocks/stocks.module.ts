@@ -11,10 +11,26 @@ import { OrderComponent } from './components/order/order.component';
 import { OrderService } from './services/order.service';
 import { OrderDataSource } from './services/order.dataSoruce';
 import { OrderForm } from './components/order-form/order-form.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 @NgModule({
   declarations: [StockComponent, OrderComponent, OrderForm],
   exports: [StockComponent, OrderComponent],
-  imports: [CommonModule, MatTableModule, HttpClientModule, MatFormFieldModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    HttpClientModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+  ],
   providers: [StockService, StockDataSource, OrderService, OrderDataSource],
 })
 export class StocksModule {}

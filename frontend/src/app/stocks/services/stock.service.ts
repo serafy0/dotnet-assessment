@@ -13,7 +13,6 @@ export class StockService {
 
   fetchStocks(): Observable<IStock[]> {
     return this.http.get<IStock[]>('https://localhost:7288/api/stock');
-    // return this.http.get<IStock[]>('http://localhost:5284/api/stock');
   }
 
   fetchRealTimeStocks(): Observable<IStock[][]> {

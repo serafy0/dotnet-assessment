@@ -21,4 +21,9 @@ export class OrderService {
       'SendOrder'
     );
   }
+  createOrder(orderData: IOrder) {
+    return this.http
+      .post('https://localhost:7288/api/order', orderData)
+      .subscribe();
+  }
 }
