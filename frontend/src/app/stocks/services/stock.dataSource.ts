@@ -20,7 +20,7 @@ export class StockDataSource extends DataSource<IStock> {
   }
   loadStocks(): void {
     this.fetchStocksFromAPI();
-    this.fetchStocksInRealTime;
+    this.fetchStocksInRealTime();
   }
   private fetchStocksInRealTime(): void {
     this.stockService.fetchRealTimeStocks().subscribe((stocks) => {
