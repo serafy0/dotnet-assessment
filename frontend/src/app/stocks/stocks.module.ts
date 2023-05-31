@@ -16,8 +16,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { NgChartsModule } from 'ng2-charts';
+import { ChartComponent } from './components/chart/chart.component';
 @NgModule({
-  declarations: [StockComponent, OrderComponent, OrderForm],
+  declarations: [StockComponent, OrderComponent, OrderForm, ChartComponent],
   exports: [StockComponent, OrderComponent],
   imports: [
     CommonModule,
@@ -30,6 +32,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
+    NgChartsModule,
   ],
   providers: [StockService, StockDataSource, OrderService, OrderDataSource],
 })

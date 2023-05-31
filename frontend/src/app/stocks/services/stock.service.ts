@@ -21,4 +21,9 @@ export class StockService {
       'PriceUpdates'
     );
   }
+  fetchOneStock(id: number): Observable<IStock> {
+    return this.http.get<IStock>(
+      `https://localhost:7288/api/stock/${id.toString()}`
+    );
+  }
 }

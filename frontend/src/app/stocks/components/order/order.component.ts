@@ -7,6 +7,7 @@ import { OrderDataSource } from '../../services/order.dataSoruce';
   templateUrl: './order.component.html',
 })
 export class OrderComponent implements OnInit {
+  title = 'orders';
   displayedColumns: string[] = [
     'id',
     'stockName',

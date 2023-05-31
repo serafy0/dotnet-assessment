@@ -8,4 +8,5 @@ export interface IPrices {
   id: number;
   value: number;
   stockID: number;
+  createdAt: string;
 }
